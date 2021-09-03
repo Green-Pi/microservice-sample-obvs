@@ -1,6 +1,22 @@
 version: '3.4'
 
 services:
+  activemq:
+    # GUI login:
+    # http://localhost:8161/admin/
+    # username: admin
+    # password: admin
+    image: ${DOCKER_REGISTRY}localactivemq
+    hostname: "activemq"
+    ports:
+      - "8161:8161"
+      - "5672:5672"
+    labels:
+      NAME: "activemq"
+    build:
+        context: ./activemq-docker
+        dockerfile: ./DOCKERFILE
+
   examplemicroservice:
     image: ${DOCKER_REGISTRY-}examplemicroservice
     build:

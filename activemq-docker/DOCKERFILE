@@ -1,0 +1,28 @@
+FROM rmohr/activemq:5.15.9-alpine
+
+# See https://hub.docker.com/r/rmohr/activemq
+#
+# GUI login:
+# http://localhost:8161/admin/
+# username: admin
+# password: admin
+#
+# Port Map
+# 61616 JMS
+# 8161  UI
+# 5672  AMQP  (since `rmohr/activemq:5.12.1`)
+# 61613 STOMP (since `rmohr/activemq:5.12.1`)
+# 1883  MQTT  (since `rmohr/activemq:5.12.1`)
+# 61614 WS    (since `rmohr/activemq:5.12.1`)
+
+USER root
+
+RUN \
+    mkdir /mnt/conf && \
+    mkdir /mnt/data && \
+    chown activemq:activemq /mnt/conf && \
+    chown activemq:activemq /mnt/data && \
+    cp -a /opt/activemq/conf/* /mnt/conf/ && \
+    cp -a /opt/activemq/data/* /mnt/data/
+
+USER activemq
