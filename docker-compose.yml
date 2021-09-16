@@ -19,6 +19,7 @@ services:
 
   examplemicroservice:
     image: ${DOCKER_REGISTRY-}examplemicroservice
+    scale: 2
     build:
       context: .
       dockerfile: ExampleMicroservice/Dockerfile

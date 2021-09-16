@@ -56,7 +56,7 @@ namespace ExampleMicroservice
             _timer.Elapsed += this.SendExampleEvent;
         }
 
-        private void SendExampleEvent(Object o, ElapsedEventArgs args)
+        private async void SendExampleEvent(Object o, ElapsedEventArgs args)
         {
             var eventToPublish = new DomainObjectChangedEvent()
             {
@@ -65,7 +65,15 @@ namespace ExampleMicroservice
             };
 
             _logger.LogInformation("Publishing event {@eventToPublish}", eventToPublish);
-            _serviceBus.PublishAsync(eventToPublish);
+            try
+            {
+                await _serviceBus.PublishAsync(eventToPublish);
+                _logger.LogInformation("Published event {@eventToPublish}", eventToPublish);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Failed to publish");
+            }
             return;
         }
 
