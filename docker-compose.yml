@@ -11,6 +11,7 @@ services:
     ports:
       - "8161:8161"
       - "5672:5672"
+      - "61616:61616"
     labels:
       NAME: "activemq"
     build:
